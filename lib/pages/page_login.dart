@@ -34,8 +34,8 @@ class PageLogin extends StatelessWidget {
 
       final db = Localstore.instance;
       // gets new id
-      final userStorage = db.collection('user').doc().id;
-      db.collection("user").doc(userStorage).set(user.toJson());
+    //  final userStorage = db.collection('user').doc().id;
+     // db.collection("user").doc(userStorage).set(user.toJson());
 
       //print("Login${helpData.user.localitation?.cityName}");
       // print(user.surnames);
@@ -82,7 +82,7 @@ class PageLogin extends StatelessWidget {
                       /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                      child: Image.network('assets/logoProyecto.png')),
+                      child: Image.asset('assets/logoProyecto.png')),
                 ),
               ),
               const SizedBox(
