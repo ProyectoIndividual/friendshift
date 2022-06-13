@@ -73,17 +73,16 @@ class PageLogin extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(top: 60.0),
+                padding: const EdgeInsets.only(top: 50.0),
                 child: Center(
                   child: Container(
-                      width: 200,
-                      height: 150,
+                      width: 350,
+                      height: 300,
 
                       /*decoration: BoxDecoration(
                         color: Colors.red,
                         borderRadius: BorderRadius.circular(50.0)),*/
-                      child: Image.network(
-                          '../../assets/images/logoProyecto.png')),
+                      child: Image.network('assets/logoProyecto.png')),
                 ),
               ),
               const SizedBox(

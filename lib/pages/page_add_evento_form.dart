@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:friendshift/models/event_model.dart';
 import 'package:friendshift/models/localitation_model.dart';
 import 'package:friendshift/pages/page_add_eventos.dart';
+import 'package:friendshift/pages/page_eventos.dart';
 import 'package:friendshift/screens/navigation_drawer.dart';
 import 'package:friendshift/screens/profile_widget.dart';
 import 'package:friendshift/services/api_service.dart';
@@ -71,7 +72,7 @@ class _PageAddEventoFormState extends State<PageAddEventoForm> {
         backgroundColor: Colors.cyan,
       );
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => const PageAddEvento()),
+        MaterialPageRoute(builder: (context) => const PageEventos()),
       );
     }
   }

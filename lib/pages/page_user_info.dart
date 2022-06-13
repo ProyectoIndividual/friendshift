@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:friendshift/models/user_model.dart';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:friendshift/pages/page_edit_profile.dart';
+import 'package:friendshift/pages/page_login.dart';
 import 'package:friendshift/screens/profile_widget.dart';
 import 'package:friendshift/help/helpdata.dart' as helpData;
 import '../screens/navigation_drawer.dart';
@@ -86,6 +87,20 @@ class _PageUserState extends State<PageUser> {
             Text(
               user.registrationDate ?? "fecha",
               style: const TextStyle(fontSize: 16, height: 1.4),
+            ),
+            const SizedBox(height: 16),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text("Cerrar Sesion"),
+              onTap: () {
+                //CloseNavigation
+
+                User user = new User();
+                helpData.user = user;
+                Navigator.pop(context);
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => PageLogin()));
+              },
             ),
           ],
         ),

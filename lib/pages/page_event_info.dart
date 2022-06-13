@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:html';
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -39,12 +39,11 @@ class _PageEventoInfoState extends State<PageEventoInfo> {
       List<Invitation> listinvi = value;
       userInvitado =
           listinvi.where((element) => element.user?.id == helpData.user.id);
-
+      print("UserInvitado ${userInvitado.name}");
       if (userInvitado != null) {
         setState(() {
           invitado = true;
         });
-      } else {
         invitacionUser = userInvitado;
       }
     });
@@ -101,7 +100,7 @@ class _PageEventoInfoState extends State<PageEventoInfo> {
                   ),
                   child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           "${widget.evento.user!.name}  ${widget.evento.user!.surnames}",
@@ -220,27 +219,45 @@ class _PageEventoInfoState extends State<PageEventoInfo> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Container(
-                          height: 50,
-                          width: 250,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Colors.blue,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: FlatButton(
-                            onPressed: () {
-                              this.addInvitacion();
-                            },
-                            child: Text(
-                              invitado != true
-                                  ? "Asistir"
-                                  : "EliminarAsistencia",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 25),
-                            ),
-                          ),
-                        ),
+                        invitado == true
+                            ? Container(
+                                height: 50,
+                                width: 250,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: FlatButton(
+                                  onPressed: () {
+                                    this.deleteInvitation();
+                                  },
+                                  child: Text(
+                                    "EliminarAsistencia",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 25),
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                height: 50,
+                                width: 250,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: FlatButton(
+                                  onPressed: () {
+                                    this.addInvitacion();
+                                  },
+                                  child: Text(
+                                    "Asistir",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 25),
+                                  ),
+                                ),
+                              ),
                         const SizedBox(height: 10),
                         userEvento == true
                             ? Container(
@@ -306,6 +323,10 @@ class _PageEventoInfoState extends State<PageEventoInfo> {
 
   Future<void> deleteInvitation() async {
     await ApiService().dellInvitation(invitacionUser);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => PageInvitaciones()),
+    );
   }
 
   Future<void> addInvitacion() async {
@@ -315,7 +336,7 @@ class _PageEventoInfoState extends State<PageEventoInfo> {
     // usuario.id = helpData.user.id;
     invitation.user = helpData.user;
     invitation.event = widget.evento;
-    if (widget.evento.isPublic != null || widget.evento.isPublic == "false") {
+    if (widget.evento.isPublic == null || widget.evento.isPublic == "false") {
       invitation.accept = false;
     } else {
       invitation.accept = true;

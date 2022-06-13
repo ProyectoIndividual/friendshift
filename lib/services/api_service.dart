@@ -11,6 +11,7 @@ class ApiService {
   var client = http.Client();
   var url = "http://localhost:9000/friendshift/";
 
+  //Login
   Future<User> postLogin(User user) async {
     var uri = Uri.parse(this.url + "user/login");
     var header = {"Content-Type": "application/json"};
@@ -28,6 +29,7 @@ class ApiService {
     return user1;
   }
 
+  //Add localitation
   Future<Localitation> postLocalitation(Localitation? localitation) async {
     var uri = Uri.parse(this.url + "localitation");
     var header = {"Content-Type": "application/json"};
@@ -41,6 +43,7 @@ class ApiService {
     return localitation1;
   }
 
+  //Add user
   Future<User> postUser(User user) async {
     var uri = Uri.parse(this.url + "user");
     var header = {"Content-Type": "application/json"};
@@ -59,6 +62,7 @@ class ApiService {
     return user1;
   }
 
+  //Edit user
   Future<User> putUser(User user) async {
     var uri = Uri.parse(this.url + "user/" + user.id.toString());
     var header = {"Content-Type": "application/json; charset=UTF-8"};
@@ -72,6 +76,7 @@ class ApiService {
     return user1;
   }
 
+  //Get events
   Future<List<Event>> getEvents() async {
     var uri = Uri.parse(this.url + "event");
     var header = {"Content-Type": "application/json"};
@@ -84,6 +89,7 @@ class ApiService {
     return events;
   }
 
+  //Get events by cityName
   Future<List<Event>> getEventsCity(String city) async {
     var uri = Uri.parse(this.url + "event?search=localitation.city:" + city);
     var header = {"Content-Type": "application/json"};
@@ -96,6 +102,7 @@ class ApiService {
     return events;
   }
 
+  //GetEventsByID user
   Future<List<Event>> getEventsIdUser(int id) async {
     var uri = Uri.parse(this.url + "event?search=user.id:" + id.toString());
     var header = {"Content-Type": "application/json"};
@@ -108,6 +115,7 @@ class ApiService {
     return events;
   }
 
+  //Add evento
   Future<Event> postEvent(Event event) async {
     var uri = Uri.parse(this.url + "event");
     var header = {"Content-Type": "application/json"};
@@ -129,6 +137,7 @@ class ApiService {
     return event1;
   }
 
+  //GetInvitacionesEventos por event id
   Future<List<Invitation>> getInvitationEvents(int id) async {
     var uri =
         Uri.parse(this.url + "invitation?search=event.id:" + id.toString());
@@ -147,6 +156,7 @@ class ApiService {
     }
   }
 
+  //GetInvitacionesUsuario por id user
   Future<List<Invitation>> getInvitationUser(int id) async {
     var uri =
         Uri.parse(this.url + "invitation?search=user.id:" + id.toString());
@@ -161,6 +171,7 @@ class ApiService {
     return invitations;
   }
 
+  //Add invitacion
   Future<Invitation> postInvitation(Invitation invitation) async {
     var uri = Uri.parse(this.url + "invitation");
     var header = {"Content-Type": "application/json"};
@@ -174,15 +185,15 @@ class ApiService {
     return invitation1;
   }
 
+  //Eliminar invitacion
   Future<void> dellInvitation(Invitation invitation) async {
     var uri = Uri.parse(this.url + "invitation/" + invitation.id.toString());
     var header = {"Content-Type": "application/json"};
 
-    var response = await this
-        .client
-        .delete(uri, headers: header, body: jsonEncode(invitation));
+    var response = await this.client.delete(uri);
   }
 
+  //Eliminar Evento
   Future<void> dellEvento(Event evento) async {
     var uri = Uri.parse(this.url + "event/" + evento.id.toString());
     var header = {"Content-Type": "application/json"};
