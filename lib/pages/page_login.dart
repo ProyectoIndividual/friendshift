@@ -32,7 +32,7 @@ class PageLogin extends StatelessWidget {
       await prefs.setString("user", jsonEncode(user));
       helpData.user = user;
 
-      final db = Localstore.instance;
+      //final db = Localstore.instance;
       // gets new id
     //  final userStorage = db.collection('user').doc().id;
      // db.collection("user").doc(userStorage).set(user.toJson());

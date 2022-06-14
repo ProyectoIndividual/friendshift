@@ -92,8 +92,8 @@ class User {
       );
 
   Map<String, dynamic> toJson() {
-    String? localitation =
-        this.localitation != null ? jsonEncode(this.localitation) : null;
+
+    Map <String, dynamic>? localitationMap = this.localitation != null ? this.localitation?.toJson() : null;
 
     /*  List<String>? events = this.events != null
         ? this.events?.map((e) => jsonEncode(e)).toList()
@@ -114,7 +114,7 @@ class User {
       'password': password,
       'registrationDate': registrationDate,
       'token': token,
-      'localitation': localitation,
+      'localitation': localitationMap,
       //  'events': events,
       // 'invitations': invitations
     };

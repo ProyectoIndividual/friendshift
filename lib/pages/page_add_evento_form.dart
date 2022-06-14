@@ -51,6 +51,8 @@ class _PageAddEventoFormState extends State<PageAddEventoForm> {
 
     if (imgBase64 != "") {
       event.image = imgBase64;
+    }else{
+      event.image = helpData.base54Event;
     }
     event.startTimePlanned = date;
     event.price = double.parse(price);
@@ -86,211 +88,217 @@ class _PageAddEventoFormState extends State<PageAddEventoForm> {
         title: const Text("Form Evento"),
         backgroundColor: Colors.cyan,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            const Align(
-              alignment: Alignment.topLeft,
-              child: Text("Introduce los datos del Evento",
-                  style: TextStyle(
-                    fontSize: 24,
-                  )),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            ProfileWidget(
-              imagePath: imageBool == false ? helpData.url1 : img.path,
-              isEdit: true,
-              onClicked: () async {
-                showImageSource(context);
-              },
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'City',
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 0.0),
-                        ),
-                        border: OutlineInputBorder()),
-                    onFieldSubmitted: (value) {
-                      setState(() {
-                        cityName = value.capitalize();
-                        // firstNameList.add(firstName);
-                      });
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        cityName = value.capitalize();
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty || value.length < 3) {
-                        return 'The city must contain at least 3 characters';
-                      } else if (value.contains(RegExp(r'^[0-9_\-=@,\.;]+$'))) {
-                        return 'The city cannot contain special characters';
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Street',
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 0.0),
-                        ),
-                        border: OutlineInputBorder()),
-                    validator: (value) {
-                      if (value == null || value.isEmpty || value.length < 3) {
-                        return 'Street must contain at least 3 characters';
-                      } else if (value.contains(RegExp(r'^[0-9_\-=@,\.;]+$'))) {
-                        return 'Street Name cannot contain special characters';
-                      }
-                    },
-                    onFieldSubmitted: (value) {
-                      setState(() {
-                        street = value.capitalize();
-                        // lastNameList.add(lastName);
-                      });
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        street = value.capitalize();
-                      });
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Detalles',
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 0.0),
-                        ),
-                        border: OutlineInputBorder()),
-                    validator: (value) {
-                      if (value == null || value.isEmpty || value.length < 3) {
-                        return 'Detalles must contain at least 3 characters';
-                      } else if (value.contains(RegExp(r'^[0-9_\-=@,\.;]+$'))) {
-                        return 'Detalles cannot contain special characters';
-                      }
-                    },
-                    onFieldSubmitted: (value) {
-                      setState(() {
-                        details = value.capitalize();
-                        // lastNameList.add(lastName);
-                      });
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        details = value.capitalize();
-                      });
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    decoration: const InputDecoration(
-                        labelText: 'Precio',
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide:
-                              BorderSide(color: Colors.grey, width: 0.0),
-                        ),
-                        border: OutlineInputBorder()),
-                    keyboardType: TextInputType.number,
-                    validator: (value) {
-                      if (value == null ||
-                          value.isEmpty ||
-                          value.contains(RegExp(r'^[a-zA-Z\-]'))) {
-                        return 'Use only numbers!';
-                      }
-                    },
-                    onFieldSubmitted: (value) {
-                      setState(() {
-                        price = value;
-                        // bodyTempList.add(bodyTemp);
-                      });
-                    },
-                    onChanged: (value) {
-                      setState(() {
-                        price = value;
-                      });
-                    },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  FormField<bool>(
-                    builder: (state) {
-                      return Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Checkbox(
-                                  value: isPublic,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      isPublic = value as bool;
-                                      state.didChange(value);
-                                    });
-                                  }),
-                              Text('Publico?'),
-                            ],
-                          ),
-//display error in matching theme
-                          Text(
-                            state.errorText ?? '',
-                            style: TextStyle(
-                              color: Theme.of(context).errorColor,
-                            ),
-                          )
-                        ],
-                      );
-                    },
-//output from validation will be displayed in state.errorText (above)
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(48)),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        _submit();
-                      }
-                    },
-                    child: const Text("Add Event"),
-                  ),
-                ],
+      body: SingleChildScrollView(
+      child: Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              const Align(
+                alignment: Alignment.topLeft,
+                child: Text("Introduce los datos del Evento",
+                    style: TextStyle(
+                      fontSize: 24,
+                    )),
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              ProfileWidget(
+                imagePath: imageBool == false ? helpData.url1 : img.path,
+                isEdit: true,
+                onClicked: () async {
+                  showImageSource(context);
+                },
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          labelText: 'City',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                            BorderSide(color: Colors.grey, width: 0.0),
+                          ),
+                          border: OutlineInputBorder()),
+                      onFieldSubmitted: (value) {
+                        setState(() {
+                          cityName = value.capitalize();
+                          // firstNameList.add(firstName);
+                        });
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          cityName = value.capitalize();
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null || value.isEmpty || value.length < 3) {
+                          return 'The city must contain at least 3 characters';
+                        } else if (value.contains(RegExp(r'^[0-9_\-=@,\.;]+$'))) {
+                          return 'The city cannot contain special characters';
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          labelText: 'Street',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                            BorderSide(color: Colors.grey, width: 0.0),
+                          ),
+                          border: OutlineInputBorder()),
+                      validator: (value) {
+                        if (value == null || value.isEmpty || value.length < 3) {
+                          return 'Street must contain at least 3 characters';
+                        } else if (value.contains(RegExp(r'^[0-9_\-=@,\.;]+$'))) {
+                          return 'Street Name cannot contain special characters';
+                        }
+                      },
+                      onFieldSubmitted: (value) {
+                        setState(() {
+                          street = value.capitalize();
+                          // lastNameList.add(lastName);
+                        });
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          street = value.capitalize();
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          labelText: 'Detalles',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                            BorderSide(color: Colors.grey, width: 0.0),
+                          ),
+                          border: OutlineInputBorder()),
+                      validator: (value) {
+                        if (value == null || value.isEmpty || value.length < 3) {
+                          return 'Detalles must contain at least 3 characters';
+                        } else if (value.contains(RegExp(r'^[0-9_\-=@,\.;]+$'))) {
+                          return 'Detalles cannot contain special characters';
+                        }
+                      },
+                      onFieldSubmitted: (value) {
+                        setState(() {
+                          details = value.capitalize();
+                          // lastNameList.add(lastName);
+                        });
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          details = value.capitalize();
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      decoration: const InputDecoration(
+                          labelText: 'Precio',
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                            BorderSide(color: Colors.grey, width: 0.0),
+                          ),
+                          border: OutlineInputBorder()),
+                      keyboardType: TextInputType.number,
+                      validator: (value) {
+                        if (value == null ||
+                            value.isEmpty ||
+                            value.contains(RegExp(r'^[a-zA-Z\-]'))) {
+                          return 'Use only numbers!';
+                        }
+                      },
+                      onFieldSubmitted: (value) {
+                        setState(() {
+                          price = value;
+
+                        });
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          price = value;
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    FormField<bool>(
+                      builder: (state) {
+                        return Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Checkbox(
+                                    value: isPublic,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isPublic = value as bool;
+                                        state.didChange(value);
+                                      });
+                                    }),
+                                Text('Publico?'),
+                              ],
+                            ),
+//display error in matching theme
+                            Text(
+                              state.errorText ?? '',
+                              style: TextStyle(
+                                color: Theme.of(context).errorColor,
+                              ),
+                            )
+                          ],
+                        );
+                      },
+//output from validation will be displayed in state.errorText (above)
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: const Size.fromHeight(25)),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _submit();
+                        }
+                      },
+                      child: const Text("Add Event"),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
+      ],
       ),
+    )
     );
   }
 

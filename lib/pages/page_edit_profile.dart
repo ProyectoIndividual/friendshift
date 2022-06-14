@@ -1,15 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friendshift/models/user_model.dart';
+import 'package:friendshift/pages/page_user_info.dart';
 import 'package:friendshift/screens/navigation_drawer.dart';
 import 'package:friendshift/screens/profile_widget.dart';
-import 'package:friendshift/screens/textfield_widget.dart';
+
 import 'package:friendshift/services/api_service.dart';
-import 'package:path/path.dart';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:friendshift/help/helpdata.dart' as helpData;
 
@@ -23,16 +25,20 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  final GlobalKey<FormState> _formKey = GlobalKey();
   late File image = new File('ok');
   late bool imageBool = false;
   late String newImgBase64 = "";
   User user = new User();
+
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     user = widget.user;
+
   }
 
   @override
@@ -54,37 +60,130 @@ class _EditProfilePageState extends State<EditProfilePage> {
               },
             ),
             const SizedBox(height: 24),
-            TextFieldWidget(
-              label: 'Full Name',
-              text: user.name ?? "name",
-              onChanged: (name) {
-                user.name = name;
+            Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+              TextFormField(
+              decoration: new InputDecoration(
+                  labelText: 'Name',
+                  hintText: user.name,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    borderSide:
+                    BorderSide(color: Colors.grey, width: 0.0),
+                  ),
+                  border: OutlineInputBorder()),
+              onFieldSubmitted: (value) {
+                setState(() {
+                  user.name = value.capitalize();
+                  // firstNameList.add(firstName);
+                });
               },
-            ),
-            const SizedBox(height: 24),
-            TextFieldWidget(
-              label: 'Email',
-              text: user.email ?? "email",
-              onChanged: (email) {
-                user.email = email;
+              onChanged: (value) {
+                setState(() {
+                  user.name = value.capitalize();
+                });
               },
-            ),
-            const SizedBox(height: 24),
-            TextFieldWidget(
-              label: 'Phone',
-              text: user.phone ?? "phone",
-              onChanged: (phone) {
-                user.phone = phone;
-              },
-            ),
-            const SizedBox(height: 24),
-            TextFieldWidget(
-              label: 'About',
-              text: user.description ?? "description",
-              maxLines: 5,
-              onChanged: (about) {
-                user.description = about;
-              },
+              ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: new InputDecoration(
+                        labelText: 'Surnames',
+                        hintText: user.surnames,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide:
+                          BorderSide(color: Colors.grey, width: 0.0),
+                        ),
+                        border: OutlineInputBorder()),
+                    onFieldSubmitted: (value) {
+                      setState(() {
+                        user.surnames = value.capitalize();
+                        // firstNameList.add(firstName);
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        user.surnames = value.capitalize();
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: new InputDecoration(
+                        labelText: 'Email',
+                        hintText: user.email,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide:
+                          BorderSide(color: Colors.grey, width: 0.0),
+                        ),
+                        border: OutlineInputBorder()),
+                    onFieldSubmitted: (value) {
+                      setState(() {
+                        user.email = value;
+                        // firstNameList.add(firstName);
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        user.email = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: new InputDecoration(
+                        labelText: 'Phone',
+                        hintText: user.phone,
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide:
+                          BorderSide(color: Colors.grey, width: 0.0),
+                        ),
+                        border: OutlineInputBorder()),
+                    keyboardType: TextInputType.number,
+                    onFieldSubmitted: (value) {
+                      setState(() {
+                        user.phone = value.capitalize();
+                        // firstNameList.add(firstName);
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        user.phone = value.capitalize();
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  TextFormField(
+                    decoration: new InputDecoration(
+                        labelText: 'About',
+                        hintText: user.description,
+
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide:
+                          BorderSide(color: Colors.grey, width: 0.0),
+                        ),
+                        border: OutlineInputBorder()),
+                    onFieldSubmitted: (value) {
+                      setState(() {
+                        user.description = value.capitalize();
+                        // firstNameList.add(firstName);
+                      });
+                    },
+                    onChanged: (value) {
+                      setState(() {
+                        user.description = value.capitalize();
+                      });
+                    },
+                  ),
+
+                ],
+              ),
             ),
             const SizedBox(height: 24),
             Container(
@@ -103,6 +202,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ),
             ),
             const SizedBox(height: 10),
+
           ],
         ),
       );
@@ -111,8 +211,26 @@ class _EditProfilePageState extends State<EditProfilePage> {
     if (newImgBase64 != null) {
       user.image = newImgBase64;
     }
-    await ApiService().putUser(user);
-  }
+    user=await ApiService().putUser(user);
+    helpData.user=user;
+
+
+    Fluttertoast.showToast(
+      msg: "UsuarioActualizado!",
+      toastLength: Toast.LENGTH_LONG,
+      fontSize: 20,
+      backgroundColor: Colors.cyan,
+    );
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => PageUser()),
+      );
+
+    }
+
+
+
 
   Future pickImage(ImageSource source) async {
     try {
@@ -150,3 +268,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ));
   }
 }
+
+extension StringExtension on String {
+  // Method used for capitalizing the input from the form
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
+  }
+}
+

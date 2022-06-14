@@ -63,14 +63,15 @@ class Event {
       );
 
   Map<String, dynamic> toJson() {
-    String? localitation =
-        this.localitation != null ? jsonEncode(this.localitation) : null;
-    String? user = this.user != null ? jsonEncode(this.user) : null;
+
+    Map <String, dynamic>? userMap = this.user != null ? this.user?.toJson() : null;
+
+    Map <String, dynamic>? localitationMap = this.localitation != null ? this.localitation?.toJson() : null;
 
     return {
       'id': id,
-      'localitation': localitation,
-      'user': user,
+      'localitation': localitationMap,
+      'user': userMap,
       'details': details,
       'image': image,
       'startTimePlanned': startTimePlanned,

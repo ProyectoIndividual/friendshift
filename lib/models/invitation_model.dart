@@ -53,13 +53,15 @@ class Invitation {
       );
 
   Map<String, dynamic> toJson() {
-    String? user = this.user != null ? jsonEncode(this.user) : null;
-    String? event = this.event != null ? jsonEncode(this.event) : null;
+
+
+    Map <String, dynamic>? userMap = this.user != null ? this.user?.toJson() : null;
+    Map <String, dynamic>? eventMap = this.event != null ? this.event?.toJson() : null;
 
     return {
       'id': id,
-      'user': user,
-      'event': event,
+      'user': userMap,
+      'event': eventMap,
       'invoiceAmount': invoiceAmount,
       'discounet': discounet,
       'totalAmount': totalAmount,

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friendshift/models/event_model.dart';
 import 'package:friendshift/models/invitation_model.dart';
 import 'package:friendshift/models/user_model.dart';
@@ -37,8 +38,7 @@ class _PageEventoInfoState extends State<PageEventoInfo> {
 
     invitaciones.then((value) {
       List<Invitation> listinvi = value;
-      userInvitado =
-          listinvi.where((element) => element.user?.id == helpData.user.id);
+      userInvitado = listinvi.where((element) => element.user?.id == helpData.user.id && element.event?.user?.id != helpData.user.id);
       print("UserInvitado ${userInvitado.name}");
       if (userInvitado != null) {
         setState(() {
@@ -323,9 +323,15 @@ class _PageEventoInfoState extends State<PageEventoInfo> {
 
   Future<void> deleteInvitation() async {
     await ApiService().dellInvitation(invitacionUser);
+    Fluttertoast.showToast(
+      msg: "Asistencia Eliminada!",
+      toastLength: Toast.LENGTH_LONG,
+      fontSize: 20,
+      backgroundColor: Colors.cyan,
+    );
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => PageInvitaciones()),
+      MaterialPageRoute(builder: (context) => PageEventos()),
     );
   }
 
@@ -342,37 +348,23 @@ class _PageEventoInfoState extends State<PageEventoInfo> {
       invitation.accept = true;
     }
 
-    test(invitation);
-
-    /* invitation = await ApiService().postInvitation(invitation);
+     invitation = await ApiService().postInvitation(invitation);
 
     if (invitation != null) {
+
+      Fluttertoast.showToast(
+        msg: "Invitado con exito!",
+        toastLength: Toast.LENGTH_LONG,
+        fontSize: 20,
+        backgroundColor: Colors.cyan,
+      );
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => PageInvitaciones()),
       );
-    }*/
+    }
   }
 
-  Future<void> test(Invitation invitacion) async {
-    var url = "http://localhost:9000/friendshift/";
-    var uri = Uri.parse(url + "invitation");
-    var header = {"Content-Type": "application/json"};
-    var client = http.Client();
-
-    var response =
-        await client.post(uri, headers: header, body: jsonEncode(invitacion));
-
-    print("Invi");
-    print(response.body);
-    Map<String, dynamic> invimap = jsonDecode(response.body);
-    var invitation1 = Invitation.fromJson(invimap);
-
-    print("Invi3 ${invitation1.id}");
-    print("Invi3 ${invitation1.user!.name}");
-    print("Invi 3${invitation1.event!.user!.name}");
-    print("Invi3 ${invitation1.id}");
-  }
 
   void dellEvento() async {
     await ApiService().dellEvento(widget.evento);
